@@ -2,10 +2,10 @@
 
 Demo project hướng dẫn **Unit Testing** với **Jest** và **React Native Testing Library** cho môn **Phát triển Ứng dụng trên Thiết bị Di động (CO3043)**.
 
-[![Run Tests](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml)
-[![SonarCloud](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/sonarcloud.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
+[![Run Tests](https://github.com/MobileApp251/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/MobileApp251/demo_mobile/actions/workflows/test.yml)
+[![SonarCloud](https://github.com/MobileApp251/demo_mobile/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/MobileApp251/demo_mobile/actions/workflows/sonarcloud.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MobileApp251_react-test&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MobileApp251_react-test)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MobileApp251_react-test&metric=coverage)](https://sonarcloud.io/summary/new_code?id=MobileApp251_react-test)
 
 ## Tổng quan
 
@@ -206,7 +206,7 @@ git init
 git add .
 git commit -m "Initial commit with tests"
 git branch -M main
-git remote add origin https://github.com/Hanguyennd2308/demo_mobile.git
+git remote add origin https://github.com/MobileApp251/demo_mobile.git
 git push -u origin main
 ```
 
@@ -261,7 +261,7 @@ jobs:
 ### Bước 4: Thêm badge vào README
 
 ```markdown
-[![Run Tests](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml)
+[![Run Tests](https://github.com/MobileApp251/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/MobileApp251/demo_mobile/actions/workflows/test.yml)
 ```
 
 ---
@@ -287,7 +287,7 @@ Sau khi tạo project, lấy thông tin:
 Tạo file `sonar-project.properties`:
 
 ```properties
-sonar.projectKey=Hanguyennd2308_demo_mobile_app
+sonar.projectKey=MobileApp251_react-test
 sonar.organization=YOUR_ORGANIZATION_KEY
 
 sonar.projectName=Demo Mobile - React Native Testing
@@ -368,8 +368,8 @@ jobs:
 ### Bước 7: Thêm badges vào README
 
 ```markdown
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MobileApp251_react-test&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MobileApp251_react-test)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MobileApp251_react-test&metric=coverage)](https://sonarcloud.io/summary/new_code?id=MobileApp251_react-test)
 ```
 
 ---
@@ -495,4 +495,4 @@ MIT License - Dự án demo cho mục đích học tập.
 
 ---
 
-**Lưu ý**: Thay thế `Hanguyennd2308`, `Hanguyennd2308_demo_mobile_app`, `YOUR_ORGANIZATION_KEY` bằng thông tin thực tế của bạn.
+**Lưu ý**: Thay thế `MobileApp251`, `MobileApp251_react-test`, `YOUR_ORGANIZATION_KEY` bằng thông tin thực tế của bạn.

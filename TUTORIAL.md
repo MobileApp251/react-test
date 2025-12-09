@@ -1,5 +1,3 @@
-
-
 # Hướng dẫn thực hành: React Native Testing
 
 Tài liệu này hướng dẫn từng bước cụ thể để các nhóm sinh viên có thể làm theo trong 1 tiết học.
@@ -14,6 +12,7 @@ Tài liệu này hướng dẫn từng bước cụ thể để các nhóm sinh 
 - npm hoặc yarn
 - Git
 - GitHub account
+
 - SonarCloud account (đăng nhập bằng GitHub)
 
 ### Kiểm tra version
@@ -42,6 +41,7 @@ code .
 ```
 
 **Checkpoint**: Bạn sẽ thấy cấu trúc:
+
 ```
 demo_mobile/
 ├── App.tsx
@@ -62,15 +62,17 @@ npm install --save-dev --legacy-peer-deps \
 ```
 
 **Lưu ý quan trọng**:
+
 - Phải dùng `--legacy-peer-deps` vì React 19 có peer dependency conflicts
 - Version `react-test-renderer` phải match với version React (19.1.0)
 
 **Checkpoint**: Kiểm tra `package.json` có các devDependencies:
+
 ```json
 {
   "devDependencies": {
     "jest": "^30.x.x",
-    "@testing-library/react-native": "^13.x.x",
+    "@testing-library/react-native": "^13.x.x"
     // ...
   }
 }
@@ -109,12 +111,7 @@ Mở `package.json` và thêm:
       "!**/*.test.{ts,tsx}",
       "!**/index.ts"
     ],
-    "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov",
-      "html"
-    ]
+    "coverageReporters": ["json-summary", "text", "lcov", "html"]
   }
 }
 ```
@@ -124,27 +121,32 @@ Mở `package.json` và thêm:
 Tạo file `jest.setup.js` ở root:
 
 ```javascript
-global.setImmediate = global.setImmediate || ((fn, ...args) => global.setTimeout(fn, 0, ...args));
+global.setImmediate =
+  global.setImmediate || ((fn, ...args) => global.setTimeout(fn, 0, ...args));
 
 global.__ExpoImportMetaRegistry = {
   register: () => {},
   get: () => null,
 };
 
-global.structuredClone = global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
+global.structuredClone =
+  global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
 ```
 
 **Giải thích**:
+
 - `setImmediate`: Polyfill cho React Native testing
 - `__ExpoImportMetaRegistry`: Mock Expo winter runtime (Expo SDK 54+)
 - `structuredClone`: Polyfill cho deep cloning
 
 **Checkpoint**: Chạy test để verify config:
+
 ```bash
 npm test
 ```
 
 Nếu không có test nào, bạn sẽ thấy:
+
 ```
 No tests found
 ```
@@ -159,6 +161,7 @@ mkdir -p src/types
 ```
 
 **Checkpoint**: Cấu trúc hiện tại:
+
 ```
 demo_mobile/
 ├── src/
@@ -178,16 +181,16 @@ demo_mobile/
 Tạo file `src/screens/OnboardingScreen/OnboardingScreen.tsx`:
 
 ```typescript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-} from 'react-native';
+} from "react-native";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 interface OnboardingItem {
   id: number;
@@ -199,21 +202,22 @@ interface OnboardingItem {
 const onboardingData: OnboardingItem[] = [
   {
     id: 1,
-    title: 'Welcome to Demo App',
-    description: 'Learn how to write effective unit tests for your React Native app',
-    emoji: '👋',
+    title: "Welcome to Demo App",
+    description:
+      "Learn how to write effective unit tests for your React Native app",
+    emoji: "👋",
   },
   {
     id: 2,
-    title: 'Test with Confidence',
-    description: 'Use Jest and React Native Testing Library for reliable tests',
-    emoji: '✅',
+    title: "Test with Confidence",
+    description: "Use Jest and React Native Testing Library for reliable tests",
+    emoji: "✅",
   },
   {
     id: 3,
-    title: 'CI/CD Integration',
-    description: 'Automate your testing workflow with GitHub Actions',
-    emoji: '🚀',
+    title: "CI/CD Integration",
+    description: "Automate your testing workflow with GitHub Actions",
+    emoji: "🚀",
   },
 ];
 
@@ -221,7 +225,9 @@ interface OnboardingScreenProps {
   onComplete?: () => void;
 }
 
-export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
+export default function OnboardingScreen({
+  onComplete,
+}: OnboardingScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -263,10 +269,7 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
         {onboardingData.map((_, index) => (
           <View
             key={index}
-            style={[
-              styles.dot,
-              index === currentIndex && styles.activeDot,
-            ]}
+            style={[styles.dot, index === currentIndex && styles.activeDot]}
             testID={`pagination-dot-${index}`}
           />
         ))}
@@ -286,10 +289,10 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
         <TouchableOpacity
           style={[styles.button, styles.nextButton]}
           onPress={isLastSlide ? handleFinish : handleNext}
-          testID={isLastSlide ? 'finish-button' : 'next-button'}
+          testID={isLastSlide ? "finish-button" : "next-button"}
         >
           <Text style={styles.nextButtonText}>
-            {isLastSlide ? 'Get Started' : 'Next'}
+            {isLastSlide ? "Get Started" : "Next"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -300,14 +303,14 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'space-between',
+    backgroundColor: "#fff",
+    justifyContent: "space-between",
     padding: 20,
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   emoji: {
     fontSize: 80,
@@ -315,67 +318,68 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 16,
-    color: '#1a1a1a',
+    color: "#1a1a1a",
   },
   description: {
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
+    textAlign: "center",
+    color: "#666",
     lineHeight: 24,
     paddingHorizontal: 20,
   },
   pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 30,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     width: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 12,
   },
   button: {
     flex: 1,
     paddingVertical: 16,
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   backButton: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
   nextButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
   backButtonText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
   nextButtonText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
 });
 ```
 
 **Lưu ý kỹ thuật**:
+
 - Sử dụng `testID` cho mọi element cần test
 - Tách logic thành các functions nhỏ (handleNext, handleBack, handleFinish)
 - Type-safe với TypeScript interfaces
@@ -385,175 +389,189 @@ const styles = StyleSheet.create({
 Tạo file `src/screens/OnboardingScreen/OnboardingScreen.test.tsx`:
 
 ```typescript
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react-native';
-import OnboardingScreen from './OnboardingScreen';
+import React from "react";
+import { render, fireEvent, screen } from "@testing-library/react-native";
+import OnboardingScreen from "./OnboardingScreen";
 
-describe('OnboardingScreen', () => {
-  describe('Rendering', () => {
-    it('should render without crashing', () => {
+describe("OnboardingScreen", () => {
+  describe("Rendering", () => {
+    it("should render without crashing", () => {
       render(<OnboardingScreen />);
-      expect(screen.getByTestId('onboarding-screen')).toBeTruthy();
+      expect(screen.getByTestId("onboarding-screen")).toBeTruthy();
     });
 
-    it('should display the first onboarding slide by default', () => {
+    it("should display the first onboarding slide by default", () => {
       render(<OnboardingScreen />);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Welcome to Demo App');
-      expect(screen.getByTestId('onboarding-description')).toHaveTextContent(
-        'Learn how to write effective unit tests for your React Native app'
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "Welcome to Demo App"
       );
-      expect(screen.getByTestId('onboarding-emoji')).toHaveTextContent('👋');
+      expect(screen.getByTestId("onboarding-description")).toHaveTextContent(
+        "Learn how to write effective unit tests for your React Native app"
+      );
+      expect(screen.getByTestId("onboarding-emoji")).toHaveTextContent("👋");
     });
 
-    it('should render pagination dots correctly', () => {
+    it("should render pagination dots correctly", () => {
       render(<OnboardingScreen />);
 
-      expect(screen.getByTestId('pagination-dot-0')).toBeTruthy();
-      expect(screen.getByTestId('pagination-dot-1')).toBeTruthy();
-      expect(screen.getByTestId('pagination-dot-2')).toBeTruthy();
+      expect(screen.getByTestId("pagination-dot-0")).toBeTruthy();
+      expect(screen.getByTestId("pagination-dot-1")).toBeTruthy();
+      expect(screen.getByTestId("pagination-dot-2")).toBeTruthy();
     });
 
-    it('should not show back button on first slide', () => {
+    it("should not show back button on first slide", () => {
       render(<OnboardingScreen />);
 
-      expect(screen.queryByTestId('back-button')).toBeNull();
+      expect(screen.queryByTestId("back-button")).toBeNull();
     });
 
-    it('should show next button on first slide', () => {
+    it("should show next button on first slide", () => {
       render(<OnboardingScreen />);
 
-      expect(screen.getByTestId('next-button')).toBeTruthy();
-      expect(screen.getByText('Next')).toBeTruthy();
+      expect(screen.getByTestId("next-button")).toBeTruthy();
+      expect(screen.getByText("Next")).toBeTruthy();
     });
   });
 
-  describe('Navigation', () => {
-    it('should navigate to next slide when Next button is pressed', () => {
+  describe("Navigation", () => {
+    it("should navigate to next slide when Next button is pressed", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Test with Confidence');
-      expect(screen.getByTestId('onboarding-emoji')).toHaveTextContent('✅');
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "Test with Confidence"
+      );
+      expect(screen.getByTestId("onboarding-emoji")).toHaveTextContent("✅");
     });
 
-    it('should show back button after navigating forward', () => {
+    it("should show back button after navigating forward", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
 
-      expect(screen.getByTestId('back-button')).toBeTruthy();
+      expect(screen.getByTestId("back-button")).toBeTruthy();
     });
 
-    it('should navigate back to previous slide when Back button is pressed', () => {
+    it("should navigate back to previous slide when Back button is pressed", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
 
-      const backButton = screen.getByTestId('back-button');
+      const backButton = screen.getByTestId("back-button");
       fireEvent.press(backButton);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Welcome to Demo App');
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "Welcome to Demo App"
+      );
     });
 
     it('should show "Get Started" button on last slide', () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
       fireEvent.press(nextButton);
 
-      expect(screen.getByTestId('finish-button')).toBeTruthy();
-      expect(screen.getByText('Get Started')).toBeTruthy();
+      expect(screen.getByTestId("finish-button")).toBeTruthy();
+      expect(screen.getByText("Get Started")).toBeTruthy();
     });
 
-    it('should call onComplete when finish button is pressed', () => {
+    it("should call onComplete when finish button is pressed", () => {
       const onCompleteMock = jest.fn();
       render(<OnboardingScreen onComplete={onCompleteMock} />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
       fireEvent.press(nextButton);
 
-      const finishButton = screen.getByTestId('finish-button');
+      const finishButton = screen.getByTestId("finish-button");
       fireEvent.press(finishButton);
 
       expect(onCompleteMock).toHaveBeenCalledTimes(1);
     });
 
-    it('should not crash when finish is pressed without onComplete prop', () => {
+    it("should not crash when finish is pressed without onComplete prop", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
       fireEvent.press(nextButton);
 
-      const finishButton = screen.getByTestId('finish-button');
+      const finishButton = screen.getByTestId("finish-button");
       expect(() => fireEvent.press(finishButton)).not.toThrow();
     });
   });
 
-  describe('Pagination', () => {
-    it('should highlight the correct pagination dot based on current slide', () => {
+  describe("Pagination", () => {
+    it("should highlight the correct pagination dot based on current slide", () => {
       const { getByTestId } = render(<OnboardingScreen />);
 
-      const nextButton = getByTestId('next-button');
+      const nextButton = getByTestId("next-button");
       fireEvent.press(nextButton);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Test with Confidence');
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "Test with Confidence"
+      );
     });
 
-    it('should navigate through all slides', () => {
+    it("should navigate through all slides", () => {
       render(<OnboardingScreen />);
 
-      expect(screen.getByTestId('onboarding-emoji')).toHaveTextContent('👋');
+      expect(screen.getByTestId("onboarding-emoji")).toHaveTextContent("👋");
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
-      expect(screen.getByTestId('onboarding-emoji')).toHaveTextContent('✅');
+      expect(screen.getByTestId("onboarding-emoji")).toHaveTextContent("✅");
 
       fireEvent.press(nextButton);
-      expect(screen.getByTestId('onboarding-emoji')).toHaveTextContent('🚀');
+      expect(screen.getByTestId("onboarding-emoji")).toHaveTextContent("🚀");
     });
   });
 
-  describe('Edge Cases', () => {
-    it('should not navigate beyond the last slide', () => {
+  describe("Edge Cases", () => {
+    it("should not navigate beyond the last slide", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
       fireEvent.press(nextButton);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('CI/CD Integration');
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "CI/CD Integration"
+      );
     });
 
-    it('should not navigate before the first slide', () => {
+    it("should not navigate before the first slide", () => {
       render(<OnboardingScreen />);
 
-      const nextButton = screen.getByTestId('next-button');
+      const nextButton = screen.getByTestId("next-button");
       fireEvent.press(nextButton);
 
-      const backButton = screen.getByTestId('back-button');
+      const backButton = screen.getByTestId("back-button");
       fireEvent.press(backButton);
       fireEvent.press(backButton);
 
-      expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Welcome to Demo App');
+      expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+        "Welcome to Demo App"
+      );
     });
   });
 });
 ```
 
 **Checkpoint**: Chạy tests:
+
 ```bash
 npm test OnboardingScreen
 ```
 
 Kết quả mong đợi:
+
 ```
 PASS src/screens/OnboardingScreen/OnboardingScreen.test.tsx
   OnboardingScreen
@@ -568,11 +586,13 @@ PASS src/screens/OnboardingScreen/OnboardingScreen.test.tsx
 **Note**: Copy code từ README.md section "Phần 3" cho HomeScreen.tsx và HomeScreen.test.tsx
 
 **Checkpoint**: Chạy tất cả tests:
+
 ```bash
 npm test
 ```
 
 Kết quả:
+
 ```
 Test Suites: 2 passed, 2 total
 Tests:       38 passed, 38 total
@@ -583,11 +603,11 @@ Tests:       38 passed, 38 total
 Thay thế content của `App.tsx`:
 
 ```typescript
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import OnboardingScreen from './src/screens/OnboardingScreen/OnboardingScreen';
-import HomeScreen from './src/screens/HomeScreen/HomeScreen';
+import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import OnboardingScreen from "./src/screens/OnboardingScreen/OnboardingScreen";
+import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 
 export default function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
@@ -611,7 +631,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });
 ```
@@ -708,8 +728,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
@@ -744,6 +764,7 @@ git push
 ```
 
 **Verify**:
+
 1. Vào GitHub repository
 2. Click tab **Actions**
 3. Xem workflow "Run Tests" đang chạy
@@ -752,6 +773,7 @@ git push
 6. Check **Artifacts** section → download `coverage-report`
 
 **Screenshot để nộp**:
+
 - Screenshot workflow success (màu xanh ✓)
 - Screenshot coverage trong logs
 
@@ -840,8 +862,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
@@ -865,6 +887,7 @@ git push
 ```
 
 **Verify**:
+
 1. Vào GitHub Actions → xem 2 workflows chạy
 2. Đợi ~3-5 phút
 3. Vào [sonarcloud.io](https://sonarcloud.io) → chọn project `demo_mobile`
@@ -875,6 +898,7 @@ git push
    - **Maintainability**: A
 
 **Screenshot để nộp**:
+
 - Screenshot SonarCloud dashboard
 - Screenshot từng metric (Coverage, Bugs, Code Smells, etc.)
 
@@ -950,13 +974,15 @@ npm install -D react-test-renderer@19.1.0 --legacy-peer-deps
 #### 2. Tests fail với "You are trying to import a file outside of the scope"
 
 Kiểm tra `jest.setup.js` có đầy đủ:
+
 ```javascript
 global.__ExpoImportMetaRegistry = {
   register: () => {},
   get: () => null,
 };
 
-global.structuredClone = global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
+global.structuredClone =
+  global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
 ```
 
 #### 3. GitHub Actions fail với npm install
@@ -966,6 +992,7 @@ global.structuredClone = global.structuredClone || ((obj) => JSON.parse(JSON.str
 #### 4. SonarCloud không nhận được coverage
 
 Kiểm tra:
+
 - `sonar-project.properties` có đúng paths
 - `coverage/lcov.info` được generate
 - SONAR_TOKEN đã add vào GitHub Secrets
@@ -973,6 +1000,7 @@ Kiểm tra:
 #### 5. Coverage quá thấp
 
 Viết thêm test cases cho:
+
 - Edge cases
 - Error handling
 - User interactions

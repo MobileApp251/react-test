@@ -491,7 +491,7 @@ MIT License - Dự án demo cho mục đích học tập.
 
 ## Contributors
 
-- **Nhóm [TÊN NHÓM]** - CO3043 - Học kỳ [HK]
+- **Nhóm [L01_Cutephomaique]** - CO3043 - Học kỳ [HK]
 
 ---
 

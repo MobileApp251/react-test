@@ -2,10 +2,10 @@
 
 Demo project hướng dẫn **Unit Testing** với **Jest** và **React Native Testing Library** cho môn **Phát triển Ứng dụng trên Thiết bị Di động (CO3043)**.
 
-[![Run Tests](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/test.yml)
-[![SonarCloud](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/sonarcloud.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=YOUR_PROJECT_KEY&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=YOUR_PROJECT_KEY)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=YOUR_PROJECT_KEY&metric=coverage)](https://sonarcloud.io/summary/new_code?id=YOUR_PROJECT_KEY)
+[![Run Tests](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml)
+[![SonarCloud](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/sonarcloud.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
 
 ## Tổng quan
 
@@ -19,9 +19,11 @@ Project này demo các kỹ thuật testing cho React Native app bao gồm:
 ## Screenshots
 
 ### Onboarding Screen
+
 Màn hình giới thiệu với 3 slides, navigation và pagination.
 
 ### Home Screen
+
 Task management app với add, toggle, và delete tasks.
 
 ## Cấu trúc project
@@ -51,12 +53,12 @@ demo_mobile/
 
 Hiện tại project đạt **97.72% coverage**:
 
-| File | % Stmts | % Branch | % Funcs | % Lines |
-|------|---------|----------|---------|---------|
-| **All files** | 97.72 | 90 | 94.44 | 97.61 |
-| App.tsx | 80 | 50 | 50 | 80 |
-| HomeScreen.tsx | 100 | 100 | 100 | 100 |
-| OnboardingScreen.tsx | 100 | 87.5 | 100 | 100 |
+| File                 | % Stmts | % Branch | % Funcs | % Lines |
+| -------------------- | ------- | -------- | ------- | ------- |
+| **All files**        | 97.72   | 90       | 94.44   | 97.61   |
+| App.tsx              | 80      | 50       | 50      | 80      |
+| HomeScreen.tsx       | 100     | 100      | 100     | 100     |
+| OnboardingScreen.tsx | 100     | 87.5     | 100     | 100     |
 
 ---
 
@@ -113,12 +115,7 @@ Thêm vào `package.json`:
       "!**/*.test.{ts,tsx}",
       "!**/index.ts"
     ],
-    "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov",
-      "html"
-    ]
+    "coverageReporters": ["json-summary", "text", "lcov", "html"]
   }
 }
 ```
@@ -126,14 +123,16 @@ Thêm vào `package.json`:
 Tạo file `jest.setup.js`:
 
 ```javascript
-global.setImmediate = global.setImmediate || ((fn, ...args) => global.setTimeout(fn, 0, ...args));
+global.setImmediate =
+  global.setImmediate || ((fn, ...args) => global.setTimeout(fn, 0, ...args));
 
 global.__ExpoImportMetaRegistry = {
   register: () => {},
   get: () => null,
 };
 
-global.structuredClone = global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
+global.structuredClone =
+  global.structuredClone || ((obj) => JSON.parse(JSON.stringify(obj)));
 ```
 
 ### Bước 4: Viết Component và Tests
@@ -142,8 +141,8 @@ global.structuredClone = global.structuredClone || ((obj) => JSON.parse(JSON.str
 
 ```typescript
 // src/screens/OnboardingScreen/OnboardingScreen.tsx
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 // ... (xem full code trong file)
 ```
@@ -152,21 +151,23 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 ```typescript
 // src/screens/OnboardingScreen/OnboardingScreen.test.tsx
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react-native';
-import OnboardingScreen from './OnboardingScreen';
+import React from "react";
+import { render, fireEvent, screen } from "@testing-library/react-native";
+import OnboardingScreen from "./OnboardingScreen";
 
-describe('OnboardingScreen', () => {
-  it('should render without crashing', () => {
+describe("OnboardingScreen", () => {
+  it("should render without crashing", () => {
     render(<OnboardingScreen />);
-    expect(screen.getByTestId('onboarding-screen')).toBeTruthy();
+    expect(screen.getByTestId("onboarding-screen")).toBeTruthy();
   });
 
-  it('should navigate to next slide when Next button is pressed', () => {
+  it("should navigate to next slide when Next button is pressed", () => {
     render(<OnboardingScreen />);
-    const nextButton = screen.getByTestId('next-button');
+    const nextButton = screen.getByTestId("next-button");
     fireEvent.press(nextButton);
-    expect(screen.getByTestId('onboarding-title')).toHaveTextContent('Test with Confidence');
+    expect(screen.getByTestId("onboarding-title")).toHaveTextContent(
+      "Test with Confidence"
+    );
   });
 
   // ... thêm các test cases khác
@@ -205,7 +206,7 @@ git init
 git add .
 git commit -m "Initial commit with tests"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/demo_mobile.git
+git remote add origin https://github.com/Hanguyennd2308/demo_mobile.git
 git push -u origin main
 ```
 
@@ -234,8 +235,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
@@ -260,7 +261,7 @@ jobs:
 ### Bước 4: Thêm badge vào README
 
 ```markdown
-[![Run Tests](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/demo_mobile/actions/workflows/test.yml)
+[![Run Tests](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml/badge.svg)](https://github.com/Hanguyennd2308/demo_mobile/actions/workflows/test.yml)
 ```
 
 ---
@@ -277,6 +278,7 @@ jobs:
 ### Bước 2: Lấy thông tin project
 
 Sau khi tạo project, lấy thông tin:
+
 - **Organization Key**: Tìm trong Settings → Organization
 - **Project Key**: Hiển thị trên dashboard
 
@@ -285,7 +287,7 @@ Sau khi tạo project, lấy thông tin:
 Tạo file `sonar-project.properties`:
 
 ```properties
-sonar.projectKey=YOUR_PROJECT_KEY
+sonar.projectKey=Hanguyennd2308_demo_mobile_app
 sonar.organization=YOUR_ORGANIZATION_KEY
 
 sonar.projectName=Demo Mobile - React Native Testing
@@ -335,8 +337,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
@@ -366,8 +368,8 @@ jobs:
 ### Bước 7: Thêm badges vào README
 
 ```markdown
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=YOUR_PROJECT_KEY&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=YOUR_PROJECT_KEY)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=YOUR_PROJECT_KEY&metric=coverage)](https://sonarcloud.io/summary/new_code?id=YOUR_PROJECT_KEY)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Hanguyennd2308_demo_mobile_app&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Hanguyennd2308_demo_mobile_app)
 ```
 
 ---
@@ -375,6 +377,7 @@ jobs:
 ## Best Practices
 
 ### 1. Viết test song song với code
+
 ```bash
 # Mỗi component mới → tạo file test ngay
 ComponentName.tsx
@@ -382,11 +385,13 @@ ComponentName.test.tsx
 ```
 
 ### 2. Chạy test locally trước khi push
+
 ```bash
 npm run test:watch
 ```
 
 ### 3. Sử dụng testID cho UI testing
+
 ```typescript
 <View testID="my-component">
   <Text testID="title">Hello</Text>
@@ -394,12 +399,14 @@ npm run test:watch
 ```
 
 ### 4. Test các trường hợp edge cases
+
 - Empty state
 - Loading state
 - Error state
 - User interactions
 
 ### 5. Maintain high coverage (≥ 70%)
+
 ```bash
 npm run test:coverage
 ```
@@ -411,6 +418,7 @@ npm run test:coverage
 ### 1. Lỗi: "Incorrect version of react-test-renderer"
 
 **Giải pháp:**
+
 ```bash
 npm install -D react-test-renderer@19.1.0 --legacy-peer-deps
 ```
@@ -418,6 +426,7 @@ npm install -D react-test-renderer@19.1.0 --legacy-peer-deps
 ### 2. Lỗi: "You are trying to import a file outside of the scope"
 
 **Giải pháp:** Thêm vào `jest.setup.js`:
+
 ```javascript
 global.__ExpoImportMetaRegistry = {
   register: () => {},
@@ -428,12 +437,14 @@ global.__ExpoImportMetaRegistry = {
 ### 3. Lỗi: GitHub Actions failed
 
 **Giải pháp:**
+
 - Kiểm tra `npm ci --legacy-peer-deps` trong workflow
 - Xem logs chi tiết trong Actions tab
 
 ### 4. SonarCloud không nhận coverage
 
 **Giải pháp:**
+
 - Kiểm tra file `sonar-project.properties`
 - Đảm bảo `coverage/lcov.info` được generate
 - Verify SONAR_TOKEN đã được thêm vào GitHub Secrets
@@ -445,18 +456,21 @@ global.__ExpoImportMetaRegistry = {
 Mỗi nhóm nộp:
 
 ### 1. Link SonarCloud project
+
 - Coverage ≥ 70%
 - Maintainability Rating ≥ A
 - Reliability Rating ≥ A
 - Security Rating ≥ A
 
 ### 2. Screenshots
+
 - SonarCloud Dashboard
 - OnboardingScreen tests (≥ 3 test cases)
 - HomeScreen tests (≥ 3 test cases)
 - GitHub Actions workflow success
 
 ### 3. README.md
+
 - Hướng dẫn chạy test locally
 - Badges (Tests, SonarCloud, Coverage)
 
@@ -481,4 +495,4 @@ MIT License - Dự án demo cho mục đích học tập.
 
 ---
 
-**Lưu ý**: Thay thế `YOUR_USERNAME`, `YOUR_PROJECT_KEY`, `YOUR_ORGANIZATION_KEY` bằng thông tin thực tế của bạn.
+**Lưu ý**: Thay thế `Hanguyennd2308`, `Hanguyennd2308_demo_mobile_app`, `YOUR_ORGANIZATION_KEY` bằng thông tin thực tế của bạn.
